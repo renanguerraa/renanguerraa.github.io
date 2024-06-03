@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - Linus</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    html, body {
+        height: 100%;
+    }
+
+    .logo {
+      max-width: 150px; 
+      display: block;
+      margin: 0 auto; 
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100% - 94px);
+        max-width: 569px !important;
+    }
+    
+    .btn-custom {
+      margin-bottom: 15px;
+      width: 100%;
+    }
+
+    .custom-header {
+      background-color: #f8f9fa;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+      height: 94px;
+    }
+
+    .btn-primary {
+        background-color: #0F216D;
+        border-color: #0F216D;
+    }
+
+    .btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+        background-color: #0c1a57 !important;
+        border-color: #0c1a57 !important;
+    }
+
+    .btn-outline-primary {
+        color: #0F216D;
+        border-color: #0F216D;
+    }
+
+  </style>
+</head>
+<body>
+    <header class="custom-header">
+        <div>
+          <img src="./logo.png" alt="Logo" class="logo img-fluid">
+        </div>
+    </header>
+
+  <div class="container">
+
+
+    <h1 class="mb-5">Bem-vindo à Linus</h1>
+    <a href="./teste_comportamental/app.html" class="btn btn-primary btn-lg btn-custom">Qual seu perfil comportamental</a>
+    <a href="./teste_lideranca/app.html" class="btn btn-primary btn-lg btn-custom">Qual seu estilo de liderança</a>
+    <a href="#" class="btn btn-primary btn-lg btn-custom" data-bs-toggle="modal" data-bs-target="#experienceModal">
+      Faça sua roda da vida
+    </a>
+    <a href="#" class="btn btn-primary btn-lg btn-custom" data-bs-toggle="modal" data-bs-target="#experienceModal">
+      Faça seu Programa de Desenvolvimento Profissional
+    </a>
+    <a href="https://linus.com.br/vagas/" class="btn btn-primary btn-lg btn-custom" target="_blank">Faça parte do Banco de Talentos Linus</a>
+    <a href="https://linus.com.br/" target="_blank" class="btn btn-primary btn-lg btn-custom">Saiba mais sobre a Linus</a>
+
+    <div class="modal fade" id="experienceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Informação</h5>
+          </div>
+          <div class="modal-body">
+            Para realizar essa Experiência, fale com alguém da Equipe Linus no nosso Stand.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal-close">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {      
+      var modalElement = document.getElementById('experienceModal');
+      var myModal = new bootstrap.Modal(modalElement);
+
+      document.querySelectorAll('[data-bs-toggle="modal"]').forEach(function (element) {
+        element.addEventListener('click', function (event) {
+          event.preventDefault();
+          myModal.show();
+        });
+      });
+
+      document.querySelectorAll('[data-bs-dismiss="modal-close"]').forEach(function (element) {
+        element.addEventListener('click', function (event) {
+          event.preventDefault();
+          myModal.hide();
+        });
+      });
+    });
+  </script>
+</body>
+</html>
