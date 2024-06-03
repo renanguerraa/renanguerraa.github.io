@@ -8,6 +8,7 @@ let myChart;
 
 const jsonData = [
     { type: 'text', title: 'Digite seu email' },
+    { type: 'text', title: 'Digite seu celular' },
     { type: 'text', title: 'Digite seu nome' },
     { type: 'text', title: 'Digite sua empresa' },
     { type: 'checkbox', options: ['Animado', 'Aventureiro', 'Analítico', 'Adaptável'] },
@@ -198,6 +199,13 @@ function createInputs() {
         resultParagraph.className = 'p-3 border rounded';
         resultParagraph.innerHTML = paragraphText;
         document.getElementById('form').appendChild(resultParagraph);
+
+        const finishParagraph = document.createElement('p');
+        finishParagraph.innerHTML = `
+            <p>Para se aprofundar no seu resultado, fale agora mesmo com a Linus</p>   
+        `;
+        document.getElementById('form').appendChild(finishParagraph);
+
 
         const recomecarBtn = document.createElement('button');
         recomecarBtn.textContent = 'Recomeçar';

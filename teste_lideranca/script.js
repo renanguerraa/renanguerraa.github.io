@@ -13,6 +13,10 @@ const jsonData = [
     },
     {
       type: "text",
+      title: "Digite seu celular"
+    },
+    {
+      type: "text",
       title: "Digite seu nome"
     },
     {
@@ -267,6 +271,12 @@ function createInputs() {
         resultParagraph.className = 'p-3 border rounded';
         resultParagraph.innerHTML = paragraphText;
         document.getElementById('form').appendChild(resultParagraph);
+
+        const finishParagraph = document.createElement('p');
+        finishParagraph.innerHTML = `
+            <p>Para se aprofundar no seu resultado, fale agora mesmo com a Linus</p>   
+        `;
+        document.getElementById('form').appendChild(finishParagraph);
 
         const recomecarBtn = document.createElement('button');
         recomecarBtn.textContent = 'Recomeçar';
