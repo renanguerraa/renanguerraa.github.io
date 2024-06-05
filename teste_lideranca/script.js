@@ -97,6 +97,16 @@ const jsonData = [
     }
   ]
 
+  const sendEmail = (templateParams) => {
+    emailjs.send('service_fyrzusd', 'template_zh5i2ob', templateParams, { publicKey: 'JQJW97uFzrBXyOfRA' })
+      .then((response) => {
+        console.log('Email enviado com sucesso!', response.status, response.text);
+      })
+      .catch((err) => {
+        console.error('Erro ao enviar email:', err);
+      });
+  };
+
 function createInputs() {
     document.getElementById('form').innerHTML = '';
     const showStartElements = document.querySelectorAll('.show-start');
@@ -266,6 +276,35 @@ function createInputs() {
               <b>SUGESTÃO:</b>  Foque em tornar o trabalho mais fácil para sua equipe. Implemente ferramentas e metodologias que auxiliem na gestão das demandas e do fluxo de trabalho, garantindo que todos possam desempenhar suas funções com excelência e autonomia.  <br>
           `;
         } 
+
+        if (formValues.length > 0) {
+          const email = formValues[0].value;
+          const phone =  formValues[1].value;
+          const name = formValues[2].value;
+          const company = formValues[3].value;
+  
+          const formValuesJSON =  JSON.stringify(formValues)
+  
+          localStorage.setItem(`${email}-lid`, formValuesJSON);
+  
+          const aCount = formValues.filter(value => value.position === 1) ?? []
+          const bCount = formValues.filter(value => value.position === 2) ?? []
+          const cCount = formValues.filter(value => value.position === 3) ?? []
+          const dCount = formValues.filter(value => value.position === 4) ?? []
+          const eCount = formValues.filter(value => value.position === 5) ?? []
+          const fCount = formValues.filter(value => value.position === 6) ?? []
+    
+          const totalQuestions = 6;
+  
+          const aPercentage = (aCount.length / totalQuestions) * 100;
+          const bPercentage = (bCount.length / totalQuestions) * 100;
+          const cPercentage = (cCount.length / totalQuestions) * 100;
+          const dPercentage = (dCount.length / totalQuestions) * 100;
+          const ePercentage = (eCount.length / totalQuestions) * 100;
+          const fPercentage = (fCount.length / totalQuestions) * 100;
+  
+          sendEmail({ email, name, company, phone, aPercentage: aPercentage.toString(), bPercentage: bPercentage.toString(), cPercentage: cPercentage.toString(), dPercentage: dPercentage.toString(), ePercentage: ePercentage.toString(), fPercentage: fPercentage.toString()})
+      }
     
         const resultParagraph = document.createElement('p');
         resultParagraph.className = 'p-3 border rounded';
@@ -347,45 +386,7 @@ function advanceToNextInput() {
     createInputs();
 }
 
-const sendEmail = (templateParams) => {
-    emailjs.send('service_fyrzusd', 'template_zh5i2ob', templateParams, { publicKey: 'JQJW97uFzrBXyOfRA' })
-      .then((response) => {
-        console.log('Email enviado com sucesso!', response.status, response.text);
-      })
-      .catch((err) => {
-        console.error('Erro ao enviar email:', err);
-      });
-  };
-
 function recomecar() {
-    if (formValues.length > 0) {
-        const email = formValues[0].value;
-        const name = formValues[1].value;
-        const company = formValues[2].value;
-
-        const formValuesJSON =  JSON.stringify(formValues)
-
-        localStorage.setItem(`${email}-lid`, formValuesJSON);
-
-        const aCount = formValues.filter(value => value.position === 1) ?? []
-        const bCount = formValues.filter(value => value.position === 2) ?? []
-        const cCount = formValues.filter(value => value.position === 3) ?? []
-        const dCount = formValues.filter(value => value.position === 4) ?? []
-        const eCount = formValues.filter(value => value.position === 5) ?? []
-        const fCount = formValues.filter(value => value.position === 6) ?? []
-  
-        const totalQuestions = 6;
-
-        const aPercentage = (aCount.length / totalQuestions) * 100;
-        const bPercentage = (bCount.length / totalQuestions) * 100;
-        const cPercentage = (cCount.length / totalQuestions) * 100;
-        const dPercentage = (dCount.length / totalQuestions) * 100;
-        const ePercentage = (eCount.length / totalQuestions) * 100;
-        const fPercentage = (fCount.length / totalQuestions) * 100;
-
-        sendEmail({ email, name, company, aPercentage: aPercentage.toString(), bPercentage: bPercentage.toString(), cPercentage: cPercentage.toString(), dPercentage: dPercentage.toString(), ePercentage: ePercentage.toString(), fPercentage: fPercentage.toString()})
-    }
-
     myChart.destroy();
     
     const chart = document.getElementById('myChart');

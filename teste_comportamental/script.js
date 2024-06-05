@@ -37,7 +37,7 @@ const jsonData = [
     { type: 'checkbox', options: ['Esquecido', 'Sincero', 'Complicado', 'Medroso'] },
     { type: 'checkbox', options: ['Inoportuno', 'Impaciente', 'Inseguro', 'Indeciso'] },
     { type: 'checkbox', options: ['Imprevisível', 'Frio', 'Impopular', 'Desligado'] },
-    { type: 'checkbox', options: ['Casual', 'Cabeludo', 'Insatisfeito', 'Excitante'] },
+    { type: 'checkbox', options: ['Casual', 'Teimoso', 'Insatisfeito', 'Excitante'] },
     { type: 'checkbox', options: ['Permissivo', 'Orgulhoso', 'Cauteloso', 'Simples'] },
     { type: 'checkbox', options: ['Esquentado', 'Discutidor', 'Alienado', 'Incerto'] },
     { type: 'checkbox', options: ['Ingênuo', 'Ousado', 'Negativo', 'Demais'] },
@@ -52,6 +52,16 @@ const jsonData = [
     { type: 'checkbox', options: ['Agitado', 'Imprudente', 'Vingativo', 'Relutante'] },
     { type: 'checkbox', options: ['Instável', 'Astuto', 'Crítico', 'Acomodado'] },
 ];
+
+const sendEmail = (templateParams) => {
+    emailjs.send('service_fyrzusd', 'template_1imaqnm', templateParams, { publicKey: 'JQJW97uFzrBXyOfRA' })
+      .then((response) => {
+        console.log('Email enviado com sucesso!', response.status, response.text);
+      })
+      .catch((err) => {
+        console.error('Erro ao enviar email:', err);
+      });
+};
 
 function createInputs() {
     document.getElementById('form').innerHTML = '';
@@ -193,8 +203,32 @@ function createInputs() {
                 <b>FEEDBACK:</b> Precisam de apoio e saber seus pontos fortes.<br>
             `;
         }
+
+        if (formValues.length > 0) {
+            const email = formValues[0].value;
+            const phone =  formValues[1].value;
+            const name = formValues[2].value;
+            const company = formValues[3].value;
     
-        // Create and append the paragraph
+            const formValuesJSON =  JSON.stringify(formValues)
+    
+            localStorage.setItem(`${email}-comp`, formValuesJSON);
+    
+            const aCount = formValues.filter(value => value.position === 1) ?? []
+            const bCount = formValues.filter(value => value.position === 2) ?? []
+            const cCount = formValues.filter(value => value.position === 3) ?? []
+            const dCount = formValues.filter(value => value.position === 4) ?? []
+      
+            const totalQuestions = 40;
+    
+            const aPercentage = (aCount.length / totalQuestions) * 100;
+            const bPercentage = (bCount.length / totalQuestions) * 100;
+            const cPercentage = (cCount.length / totalQuestions) * 100;
+            const dPercentage = (dCount.length / totalQuestions) * 100;
+    
+            sendEmail({ email, name, company, phone, aPercentage: aPercentage.toString(), bPercentage: bPercentage.toString(), cPercentage: cPercentage.toString(), dPercentage: dPercentage.toString()})
+        }
+    
         const resultParagraph = document.createElement('p');
         resultParagraph.className = 'p-3 border rounded';
         resultParagraph.innerHTML = paragraphText;
@@ -276,46 +310,11 @@ function advanceToNextInput() {
     createInputs();
 }
 
-const sendEmail = (templateParams) => {
-    emailjs.send('service_fyrzusd', 'template_1imaqnm', templateParams, { publicKey: 'JQJW97uFzrBXyOfRA' })
-      .then((response) => {
-        console.log('Email enviado com sucesso!', response.status, response.text);
-      })
-      .catch((err) => {
-        console.error('Erro ao enviar email:', err);
-      });
-  };
-
 function recomecar() {
-    if (formValues.length > 0) {
-        const email = formValues[0].value;
-        const name = formValues[1].value;
-        const company = formValues[2].value;
-
-        const formValuesJSON =  JSON.stringify(formValues)
-
-        localStorage.setItem(`${email}-comp`, formValuesJSON);
-
-        const aCount = formValues.filter(value => value.position === 1) ?? []
-        const bCount = formValues.filter(value => value.position === 2) ?? []
-        const cCount = formValues.filter(value => value.position === 3) ?? []
-        const dCount = formValues.filter(value => value.position === 4) ?? []
-  
-        const totalQuestions = 40;
-
-        const aPercentage = (aCount.length / totalQuestions) * 100;
-        const bPercentage = (bCount.length / totalQuestions) * 100;
-        const cPercentage = (cCount.length / totalQuestions) * 100;
-        const dPercentage = (dCount.length / totalQuestions) * 100;
-
-        sendEmail({ email, name, company, aPercentage: aPercentage.toString(), bPercentage: bPercentage.toString(), cPercentage: cPercentage.toString(), dPercentage: dPercentage.toString()})
-    }
-
     myChart.destroy();
     
     const chart = document.getElementById('myChart');
     chart.style.display = 'none';
-
 
     currentIndex = 0;
     formValues = [];
